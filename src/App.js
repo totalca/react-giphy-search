@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from "axios"
+import Range from './component/range'
+
+const API_URL = 'http://api.giphy.com/v1/gifs/search?'
+const API_KEY = 'fhruhErb7kOixSYUM2EV916C9qVt2wiL'
 
 class App extends Component {
   state = {
@@ -9,17 +13,18 @@ class App extends Component {
     rating:"",
     limit:3
   }
+
   componentDidMount() {
-    axios.get("http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=fhruhErb7kOixSYUM2EV916C9qVt2wiL&limit=5")
+    axios.get(`${API_URL}q=funny+pug&api_key=${API_KEY}&limit=
+      ${this.state.limit}`)
       .then(({data}) => {
-        console.log(data)
         this.setState({list:data.data})
       })
   }
 
   renderList = () => {
     return this.state.list.map((item, key) => 
-    <li key={key}>
+    <li key={item.id}>
       <h2>{item.title}</h2>
       <img 
         src={item.images.original.url} 
@@ -30,10 +35,19 @@ class App extends Component {
     </li>)
   }
 
+  updateLimit = e => {
+    this.setState({
+      limit:e.target.value
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        Giphy Search
+        <p>Giphy Search</p>
+        <span>{this.state.limit}</span>
+        <Range limit={this.state.limit} 
+        updateLimit={this.updateLimit} />
         <ul>
           {this.renderList()}
         </ul>
