@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import axios from "axios"
 
 class App extends Component {
+  state = {
+    list:[],
+    searchTerm:"",
+    rating:"",
+    limit:3
+  }
+  componentDidMount() {
+    axios.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=fhruhErb7kOixSYUM2EV916C9qVt2wiL&limit=5")
+      .then(({data}) => {
+        console.log(data)
+        this.setState({list:data.data})
+      })
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        Giphy Search
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
     );
   }
