@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Range = props => {
   return (
@@ -7,8 +7,7 @@ const Range = props => {
     type="range" 
     min="1" 
     max="100" 
-    defaultValue={props.limit} 
-    />
+    defaultValue={props.limit} />
   )
 }
 export default Range 
